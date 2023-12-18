@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400&family=Lilita+One&display=swap');
+
+:root {
+    --light-purple: #D0D5FF;
+    --purple: #5235FF;
+    --bkg-clr: linear-gradient(180deg, #CCD1FF 8.54%, rgba(252, 252, 252, 0) 100%);
+    --gray: rgba(120, 120, 120, 73%);
+    --gray-light: rgba(255, 255, 255, 73%);
+    --title-clr: black;
+
+    /* fonts */
+    --main-font: 'Lilita One', sans-serif;
+    --secondary-font: 'Inter', sans-serif;
+
+    /* font weight */
+    --fw-extra-light: 200;
+    --fw-light: 300;
+    --fw-regular: 400;
+
+    /* font sizes */
+    --fs-title: 2.5rem;
+    --fs-subtitle: 0.813rem;
+    --fs-menu: 1.5rem;
+    --fs-search: 0.938rem;
+
+    /* widths */
+    --w-search-bar: 20.063rem;
+
+    /* heights */
+    --h-search-bar: 2.063rem;
+
+    /* padding */
+    --pd-container: 1.2rem;
+
+    /* gaps */
+    --gp-lcontainer: 5rem;
+    --gp-menu: 0.8rem;
+    --gp-search: 0.8rem;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    
+    height: 100vh;
+    display: flex;
+    font-family: var(--secondary-font);
+    color: var(--gray);
+}
+
+p {
+    margin: 0;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.left.container {
+    background: var(--bkg-clr);
+    padding: var(--pd-container);
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--gp-lcontainer);
+}
+
+.title > .main {
+    font-family: var(--main-font);
+    font-size: var(--fs-title);
+    letter-spacing: 0.05rem;
+    color: var(--title-clr);
+}
+
+.title > .subtitle {
+    font-size: var(--fs-subtitle);
+    text-align: center;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--gp-menu);
+}
+
+.menu > li {
+    font-size: var(--fs-menu);
+}
+
+/* RIGHT CONTAINER */
+.right.container {
+    width: 100vw;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.right > .search {
+    display: flex;
+    gap: var(--gp-search);
+    align-items: center;
+
+    font-size: var(--fs-search);
+}
+
+.search-bar {
+    width: var(--w-search-bar);
+    height: var(--h-search-bar);
+
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+li:hover, .selected {
+    background-color: var(--purple);
+    padding: 0.3rem 0.5rem;
+    border-radius: 5px;
+    color: var(--gray-light);
+    transition: 1s;
+}
