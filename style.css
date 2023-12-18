@@ -7,7 +7,6 @@
     --gray: rgba(120, 120, 120, 73%);
     --gray-light: rgba(255, 255, 255, 73%);
     --title-clr: black;
-    --arrow-clr: #D9D9D9;
 
     /* fonts */
     --main-font: 'Lilita One', sans-serif;
@@ -51,8 +50,13 @@ body {
     
     height: 100vh;
     display: flex;
-    font-family: var(--secondary-font);
     color: var(--gray);
+}
+
+body,
+input,
+select {
+    font-family: var(--secondary-font);
 }
 
 p {
@@ -117,7 +121,6 @@ ul {
 
 .search > input {
     border: none;
-    font-family: var(--secondary-font);
 
     width: var(--w-search-bar);
     height: var(--h-search-bar);
@@ -127,6 +130,14 @@ ul {
     padding-left: var(--pd-input);
 }
 
+select#type {
+    /* appearance: none; */
+    background: none;
+    border: none;
+    text-align: center;
+    color: var(--gray);
+}
+
 .search > img[class="magnify"] {
     position: relative;
     left: var(--pd-search-icon);
@@ -134,10 +145,6 @@ ul {
     /* reset empty space left by positioning */
     /* TY StackOverflow: https://stackoverflow.com/a/73273473/21600888 */
     margin-left: calc((var(--pd-search-icon) - 3rem));
-}
-
-.arrow {
-    color: var(--arrow-clr);
 }
 
 li:hover, .selected {

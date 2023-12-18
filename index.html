@@ -25,7 +25,12 @@
          <!-- RIGHT SIDE -->
          <div class="right container">
             <div class="search">
-                <span class="type text">title <span class="arrow">▼</span></span>
+                <select name="type" id="type">
+                    <option value="title">title</option>
+                    <option value="author">author</option>
+                    <option value="subject">subject</option>
+                    <option value="text">text</option>
+                </select>
                 <img class="magnify" src="./assets/icons/magnify.svg" alt="">
                 <input type="text" name="search" id="search" placeholder="search">
                 <img src="./assets/icons/random.svg" alt="">
