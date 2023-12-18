@@ -7,6 +7,7 @@
     --gray: rgba(120, 120, 120, 73%);
     --gray-light: rgba(255, 255, 255, 73%);
     --title-clr: black;
+    --arrow-clr: #D9D9D9;
 
     /* fonts */
     --main-font: 'Lilita One', sans-serif;
@@ -31,11 +32,13 @@
 
     /* padding */
     --pd-container: 1.2rem;
+    --pd-input: 2rem;
+    --pd-search-icon: 1.8rem;
 
     /* gaps */
     --gp-lcontainer: 5rem;
     --gp-menu: 0.8rem;
-    --gp-search: 0.8rem;
+    --gp-search: 0.5rem;
 }
 
 * {
@@ -103,6 +106,7 @@ ul {
     align-items: center;
 }
 
+/* SEARCH BAR */
 .right > .search {
     display: flex;
     gap: var(--gp-search);
@@ -111,13 +115,29 @@ ul {
     font-size: var(--fs-search);
 }
 
-.search-bar {
+.search > input {
+    border: none;
+    font-family: var(--secondary-font);
+
     width: var(--w-search-bar);
     height: var(--h-search-bar);
+    border: 1px solid rgba(120, 120, 120, 0.5);
+    border-radius: 10px;
+    /* text-align: center; */
+    padding-left: var(--pd-input);
+}
 
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+.search > img[class="magnify"] {
+    position: relative;
+    left: var(--pd-search-icon);
+
+    /* reset empty space left by positioning */
+    /* TY StackOverflow: https://stackoverflow.com/a/73273473/21600888 */
+    margin-left: calc((var(--pd-search-icon) - 3rem));
+}
+
+.arrow {
+    color: var(--arrow-clr);
 }
 
 li:hover, .selected {
