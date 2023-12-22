@@ -38,6 +38,11 @@
     --gp-lcontainer: 5rem;
     --gp-menu: 0.8rem;
     --gp-search: 0.5rem;
+    --gp-book-grid: 2rem;
+    --gp-book-flex: 1rem;
+
+    /* shadows */
+    --shadow-result: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 }
 
 * {
@@ -153,4 +158,30 @@ li:hover, .selected {
     border-radius: 5px;
     color: var(--gray-light);
     transition: 1s;
+}
+
+.books.container {
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--gp-book-grid);
+}
+
+.books.container > .result {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gp-book-flex);
+    
+}
+
+.books.container > .result img{
+    width: 300px;
+    height: 400px;
+    border-radius: 10px;
+    filter: var(--shadow-result);
+}
+
+.result > .info > p:first-of-type {
+    font-weight: bold;
+    color: black;
 }

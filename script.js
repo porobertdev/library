@@ -53,8 +53,9 @@ const api = {
                 for (book of data.docs) {
                     console.log(book.title);
 
-                    let html = `<img src="https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg?default=false"><p class="title">${book.title}></p><p class="author">${book.author_name}</p>`;
+                    let html = `<img src="https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg?default=false"><div class="info"><p class="title">${book.title}</p><p class="author">${book.author_name}</p></div>`;
                     let div = document.createElement('div');
+                    div.classList.add('result');
                     div.innerHTML = html;
                     bookContainer.appendChild(div);
                 }
