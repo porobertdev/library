@@ -63,9 +63,17 @@ const api = {
                     div.innerHTML = html;
                     bookContainer.appendChild(div);
                 }
+
+                this.checkInvalidCovers();
             })
             .catch(error => {
                 console.error('Error:', error);
             });
+    },
+    checkInvalidCovers: function() {
+        let img = document.querySelectorAll('.books.container > div > img')
+        img.forEach( item => item.addEventListener('error', () => {
+            item.setAttribute('src', './assets/no-image.svg');
+        }));
     }
 };
