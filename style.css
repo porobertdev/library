@@ -3,6 +3,7 @@
 :root {
     --light-purple: #D0D5FF;
     --purple: #5235FF;
+    --blue: #001AFF;
     --bkg-clr: linear-gradient(180deg, #CCD1FF 8.54%, rgba(252, 252, 252, 0) 100%);
     --gray: rgba(120, 120, 120, 73%);
     --gray-light: rgba(255, 255, 255, 73%);
@@ -33,6 +34,7 @@
     --pd-container: 1.2rem;
     --pd-input: 2rem;
     --pd-search-icon: 1.8rem;
+    --pd-dialog: 3rem;
 
     /* gaps */
     --gp-lcontainer: 5rem;
@@ -40,6 +42,7 @@
     --gp-search: 0.5rem;
     --gp-book-grid: 2rem;
     --gp-book-flex: 1rem;
+    --gp-modal: 3rem;
 
     /* shadows */
     --shadow-result: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
@@ -64,13 +67,14 @@ select {
     font-family: var(--secondary-font);
 }
 
-p {
+p,
+ul,
+h1 {
     margin: 0;
 }
 
 ul {
     list-style: none;
-    margin: 0;
     padding: 0;
 }
 
@@ -184,4 +188,66 @@ li:hover, .selected {
 .result > .info > p:first-of-type {
     font-weight: bold;
     color: black;
+}
+
+/* MODAL */
+dialog {
+    border-radius: 10px;
+    width: 80vw;
+    height: 80vh;
+    padding: var(--pd-dialog);
+}
+dialog:active {
+    border: none;
+    appearance: none;
+}
+dialog > #modal {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: 1fr 4fr;
+    gap: var(--gp-modal);
+}
+
+#modal .links img,
+#modal .author img {
+    width: 50px;
+    height: 50px;
+}
+
+#modal .links,
+#modal .author {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+#modal .links {
+    margin-top: 1rem;
+    justify-content: center;
+}
+
+#modal .right {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+#modal .author {
+    color: var(--blue);
+}
+
+#modal .description {
+    font-weight: var(--fw-light);
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.tags span {
+    border-radius: 20px;
+    padding: 0.3rem 1rem;
+    background-color: var(--light-purple);
 }
