@@ -49,31 +49,36 @@ const api = {
             .then(data => {
                 // HAnDLE RESPONSE DATA
                 console.log(data);
-                
+
                 for (book of data.docs) {
                     console.log(book.title);
 
-                    let html = `<img src="https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg?default=false">
-                                <div class="info">
-                                    <p class="title">${book.title}</p>
-                                    <p class="author">${book.author_name}</p>
-                                </div>`;
-                    let div = document.createElement('div');
-                    div.classList.add('result');
-                    div.innerHTML = html;
-                    bookContainer.appendChild(div);
+                    showResults(book);
                 }
 
-                this.checkInvalidCovers();
+                checkInvalidCovers();
             })
             .catch(error => {
                 console.error('Error:', error);
             });
-    },
-    checkInvalidCovers: function() {
-        let img = document.querySelectorAll('.books.container > div > img')
-        img.forEach( item => item.addEventListener('error', () => {
-            item.setAttribute('src', './assets/no-image.svg');
-        }));
+
+            function showResults() {
+                let html = `<img src="https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg?default=false">
+                            <div class="info">
+                                <p class="title">${book.title}</p>
+                                <p class="author">${book.author_name}</p>
+                            </div>`;
+                let resultDiv = document.createElement('div');
+                resultDiv.classList.add('result');
+                resultDiv.innerHTML = html;
+                bookContainer.appendChild(resultDiv);
+            }
+
+            function checkInvalidCovers() {
+                let img = document.querySelectorAll('.books.container > div > img');
+                img.forEach( item => item.addEventListener('error', () => {
+                    item.setAttribute('src', './assets/no-image.svg');
+                }));
+            }
     }
 };
