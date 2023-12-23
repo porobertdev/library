@@ -94,7 +94,14 @@ const api = {
                                     <img src='https://covers.openlibrary.org/a/olid/${book.author_key}-L.jpg'>
                                     <p>${book.author_name}</p>
                                 </div>
-                                <span class="rating"></span>
+                                <div class="rating container">
+                                    <span class="rating">★</span>
+                                    <span class="rating">★</span>
+                                    <span class="rating">★</span>
+                                    <span class="rating">★</span>
+                                    <span class="rating">★</span>
+                                    <!-- <span>${book.ratings_average}</span> -->
+                                </div>
                                 <p class="description">
                                     <p>
                                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat unde odio incidunt quidem culpa commodi molestias, harum, aliquid quasi nemo voluptatem eligendi? Vel eius aut magnam facere fugiat at accusamus.
@@ -114,6 +121,8 @@ const api = {
                         </div>`;
 
             let dialog = document.createElement('dialog');
+            let dialogAttr = book.key.split('/')[2]; // used to select only this book's stars
+            dialog.classList.add(dialogAttr);
             dialog.innerHTML = modal;
             resultDiv.appendChild(dialog);
 
@@ -122,6 +131,13 @@ const api = {
                 dialog.showModal();
             });
 
+            // RATING
+            // if book result contains `ratings_average` key
+            if (book.ratings_average) {
+                let stars = document.querySelectorAll(`.${dialogAttr} span.rating:nth-child(-n+${Math.floor(book.ratings_average)})`);
+                stars.forEach( star => star.classList.add('checked'));
+            }
+            
             // hashtags
             let hashtags = document.querySelector('.result:last-child .tags');
             console.log(hashtags);

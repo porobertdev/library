@@ -4,6 +4,7 @@
     --light-purple: #D0D5FF;
     --purple: #5235FF;
     --blue: #001AFF;
+    --orange: #FF6007;
     --bkg-clr: linear-gradient(180deg, #CCD1FF 8.54%, rgba(252, 252, 252, 0) 100%);
     --gray: rgba(120, 120, 120, 73%);
     --gray-light: rgba(255, 255, 255, 73%);
@@ -251,4 +252,9 @@ dialog > #modal {
     border-radius: 20px;
     padding: 0.3rem 1rem;
     background-color: var(--light-purple);
+}
+
+/* rating */
+span.rating.checked {
+    color: var(--orange);
 }
