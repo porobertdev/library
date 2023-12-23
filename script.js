@@ -125,10 +125,15 @@ const api = {
             // hashtags
             let hashtags = document.querySelector('.result:last-child .tags');
             console.log(hashtags);
-
             
             if (book.subject_facet) {
-                for (tag of book.subject_facet) {
+                // THANKS TO dev.to & StackOverflow
+                // https://dev.to/soyleninjs/3-ways-to-remove-duplicates-in-an-array-in-javascript-259o#:~:text=to%20do%20this%3A-,1)%20Use%20Set,-Using%20Set()%2C%20an
+                let filtered = [... new Set(book.subject_facet
+                    .map(item => item.toLowerCase())
+                    .filter( item => !item.includes(' ')))];
+
+                for (tag of filtered) {
                     let span = document.createElement('span');
                     span.textContent = '#' + tag;
                     hashtags.appendChild(span);
@@ -137,7 +142,7 @@ const api = {
         }
 
         function checkInvalidCovers() {
-            let img = document.querySelectorAll('.books.container > div > img');
+            let img = document.querySelectorAll('.books.container img');
             img.forEach( item => item.addEventListener('error', () => {
                 item.setAttribute('src', './assets/no-image.svg');
             }));
