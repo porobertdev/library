@@ -48,12 +48,7 @@ const api = {
             })
             .then(data => {
                 // HAnDLE RESPONSE DATA
-                console.log(data);
-
-                for (book of data.docs) {
-                    console.log(book);
-                    showResults();
-                }
+                this.showResults(data.docs);
 
                 checkInvalidCovers();
             })
@@ -61,7 +56,16 @@ const api = {
                 console.error('Error:', error);
             });
 
-        function showResults() {
+        function checkInvalidCovers() {
+            let img = document.querySelectorAll('.books.container img');
+            img.forEach( item => item.addEventListener('error', () => {
+                item.setAttribute('src', './assets/no-image.svg');
+            }));
+        }
+    },
+    showResults: function(books) {
+
+        for (book of books) {
             let html = `<img src="https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg?default=false">
                         <div class="info">
                             <p class="title">${book.title}</p>
@@ -155,13 +159,6 @@ const api = {
                     hashtags.appendChild(span);
                 }
             }
-        }
-
-        function checkInvalidCovers() {
-            let img = document.querySelectorAll('.books.container img');
-            img.forEach( item => item.addEventListener('error', () => {
-                item.setAttribute('src', './assets/no-image.svg');
-            }));
         }
     }
 };
