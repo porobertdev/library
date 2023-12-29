@@ -85,8 +85,9 @@ const api = {
             if (books == userBooks.favorites) console.log('parsing favorites...');
 
             let olid = book.key.split('/')[2];
+            // used to remove the book
+            let index = userBooks.favorites.findIndex( item => item.key.includes(olid));
 
-            // create result & modal HTML for each book
             Object.getPrototypeOf(book).createHTML = function() {
                 this.html = `<img src="https://covers.openlibrary.org/b/id/${this.cover_i}-L.jpg?default=false">
                             <div class="info">
@@ -105,7 +106,7 @@ const api = {
                                             <img class="amazon" src="./assets/icons/amazon.svg">
                                         </a>
                                         <img class="read_status" src="./assets/icons/read_status.svg">
-                                        <img class="favorites ${olid}" src="./assets/icons/favorite.svg">
+                                        <img class="favorites ${olid}" src="./assets/icons/favorite-${(index != -1) ? 'filled' : 'empty'}.svg">
                                     </div>
                                 </div>
 
@@ -176,9 +177,6 @@ const api = {
             let currBook = book;
 
             favIcon.addEventListener('click', () => {
-
-                // used to remove the book
-                let index = userBooks.favorites.findIndex( item => item.key.includes(olid));
                 
                 if (!userBooks.favorites.includes(currBook)) {
                     console.log('not included, adding...');
