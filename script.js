@@ -4,13 +4,22 @@ const searchType = document.querySelector('select');
 const input = document.querySelector('input#search');
 // book container
 const bookContainer = document.querySelector('div.books.container');
+const favBtn = document.querySelector('ul.menu li:nth-child(2)');
+
+const userBooks = {
+    favorites: [],
+    read: []
+};
 
 input.addEventListener('keydown', handleEvent);
+favBtn.addEventListener('click', handleEvent);
 
 function handleEvent(event) {
+    console.log(event, event.target.localName);
     if (event.key == 'Enter') {
-        console.log(api.generateUrl());
         api.fetchLibrary();
+    } else if (event.target.localName == 'li') {
+        api.showResults(userBooks.favorites);
     }
 }
 
@@ -40,7 +49,6 @@ const api = {
 
         fetch(url)
             .then(response => {
-                console.log(response);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
@@ -64,8 +72,9 @@ const api = {
         }
     },
     showResults: function(books) {
-
         for (book of books) {
+            if (books == userBooks.favorites) console.log('parsing favorites...');
+            
             let html = `<img src="https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg?default=false">
                         <div class="info">
                             <p class="title">${book.title}</p>
@@ -75,6 +84,8 @@ const api = {
             resultDiv.classList.add('result');
             resultDiv.innerHTML = html;
             bookContainer.appendChild(resultDiv);
+
+            let olid = book.key.split('/')[2];
 
             // create a modal for each result
             let modal = `<div id="modal">
@@ -88,7 +99,7 @@ const api = {
                                         <img class="amazon" src="./assets/icons/amazon.svg">
                                     </a>
                                     <img class="read_status" src="./assets/icons/read_status.svg">
-                                    <img class="favorites" src="./assets/icons/favorite.svg">
+                                    <img class="favorites ${olid}" src="./assets/icons/favorite.svg">
                                 </div>
                             </div>
 
@@ -135,6 +146,38 @@ const api = {
                 dialog.showModal();
             });
 
+            // FAVORITES
+            // select favicon specific to the current book of the loop
+            let favIcon = document.querySelector(`img.favorites.${olid}`)
+            console.log(`main loop: ${book}`);
+            
+            /*
+                to get correct value in event listener's function
+                when the element is clicked.
+                
+                Thanks to @Sokolan from TOP's Discord group here.
+                See commit message.
+            */
+            let currBook = book;
+
+            favIcon.addEventListener('click', () => {
+
+                // used to remove the book
+                let index = userBooks.favorites.findIndex( item => item.key.includes(olid));
+                
+                if (!userBooks.favorites.includes(currBook)) {
+                    console.log('not included, adding...');
+                    userBooks.favorites.push(currBook);
+                    favIcon.setAttribute('src', './assets/icons/favorite-filled.svg');
+                } else {
+                    userBooks.favorites.splice(index, 1);
+                    console.log('present already. deleting it...');
+                    favIcon.setAttribute('src', './assets/icons/favorite-empty.svg');
+                }
+                console.log('favorites:');
+                console.log(userBooks.favorites);
+            })
+
             // RATING
             // if book result contains `ratings_average` key
             if (book.ratings_average) {
@@ -144,7 +187,6 @@ const api = {
             
             // hashtags
             let hashtags = document.querySelector('.result:last-child .tags');
-            console.log(hashtags);
             
             if (book.subject_facet) {
                 // THANKS TO dev.to & StackOverflow
