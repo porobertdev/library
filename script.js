@@ -72,6 +72,11 @@ const api = {
         }
     },
     showResults: function(books) {
+
+        // Delete existing search results
+        // Thanks @StackOverflow: https://stackoverflow.com/a/64974905/21600888
+        bookContainer.replaceChildren('');
+
         for (book of books) {
             if (books == userBooks.favorites) console.log('parsing favorites...');
             
