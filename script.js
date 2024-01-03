@@ -61,18 +61,11 @@ const api = {
                 // HAnDLE RESPONSE DATA
                 this.showResults(data.docs);
 
-                checkInvalidCovers();
             })
             .catch(error => {
                 console.error('Error:', error);
             });
 
-        function checkInvalidCovers() {
-            let img = document.querySelectorAll('.books.container img');
-            img.forEach( item => item.addEventListener('error', () => {
-                item.setAttribute('src', './assets/no-image.svg');
-            }));
-        }
     },
     showResults: function(books) {
 
@@ -214,5 +207,14 @@ const api = {
                 }
             }
         }
+
+        function checkInvalidCovers() {
+            let img = document.querySelectorAll('.books.container img');
+            img.forEach( item => item.addEventListener('error', () => {
+                item.setAttribute('src', './assets/no-image.svg');
+            }));
+        }
+
+        checkInvalidCovers();
     }
 };
