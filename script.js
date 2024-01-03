@@ -4,15 +4,15 @@ const searchType = document.querySelector('select');
 const input = document.querySelector('input#search');
 // book container
 const bookContainer = document.querySelector('div.books.container');
-const favBtn = document.querySelector('ul.menu li:nth-child(2)');
+const tabs = document.querySelectorAll('ul.menu li');
 
 const userBooks = {
     favorites: [],
-    read: []
+    library: []
 };
 
 input.addEventListener('keydown', handleEvent);
-favBtn.addEventListener('click', handleEvent);
+tabs.forEach( tab => tab.addEventListener('click', handleEvent));
 searchType.addEventListener('click', handleEvent);
 
 function handleEvent(event) {
@@ -20,7 +20,7 @@ function handleEvent(event) {
     if (event.key == 'Enter') {
         api.fetchLibrary();
     } else if (event.target.localName == 'li') {
-        api.showResults(userBooks.favorites);
+        api.showResults(userBooks[event.target.className]);
     } else if (event.target.localName == 'select') {
         input.focus();
     }
