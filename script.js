@@ -91,10 +91,10 @@ const api = {
                                 <div class="left">
                                     <img src="https://covers.openlibrary.org/b/id/${this.cover_i}-L.jpg?default=false">
                                     <div class="links">
-                                        <a href="https://goodreads.com/book/show/${this.id_goodreads}">
+                                        <a href="https://goodreads.com/book/show/${this.id_goodreads}" target="_blank">
                                             <img class="goodreads" src="./assets/icons/goodreads.svg">
                                         </a>
-                                        <a href="https://www.amazon.com/dp/${this.id_amazon}">
+                                        <a href="https://www.amazon.com/dp/${this.id_amazon}" target="_blank">
                                             <img class="amazon" src="./assets/icons/amazon.svg">
                                         </a>
                                         <img class="read_status" src="./assets/icons/read_status.svg">
