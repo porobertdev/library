@@ -5,7 +5,6 @@ const input = document.querySelector('input#search');
 // book container
 const bookContainer = document.querySelector('div.books.container');
 const favBtn = document.querySelector('ul.menu li:nth-child(2)');
-const selected = document.querySelector('select');
 
 const userBooks = {
     favorites: [],
@@ -14,7 +13,7 @@ const userBooks = {
 
 input.addEventListener('keydown', handleEvent);
 favBtn.addEventListener('click', handleEvent);
-selected.addEventListener('click', handleEvent);
+searchType.addEventListener('click', handleEvent);
 
 function handleEvent(event) {
     console.log(event, event.target.localName);
