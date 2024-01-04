@@ -35,6 +35,7 @@ const api = {
             id_goodreads,id_amazon`
         },
         author: {
+            
             url: 'search/authors.json?q=',
             params: ''
         },
@@ -74,83 +75,85 @@ const api = {
         bookContainer.replaceChildren('');
 
         for (book of books) {
+            console.log(book);
             if (books == userBooks.favorites) console.log('parsing favorites...');
 
+            // book's unique OL ID
             let olid = book.key.split('/')[2];
+
             // used to remove the book
             let index = userBooks.favorites.findIndex( item => item.key.includes(olid));
 
+            // Prototype Method to genereate HTML for each book
             Object.getPrototypeOf(book).createHTML = function() {
+                // create info for search result
                 this.html = `<img src="https://covers.openlibrary.org/b/id/${this.cover_i}-L.jpg?default=false">
                             <div class="info">
                                 <p class="title">${this.title}</p>
                                 <p class="author">${this.author_name}</p>
                             </div>`;
-                // create a modal for each result
-                this.modal = `<div id="modal">
-                                <div class="left">
-                                    <img src="https://covers.openlibrary.org/b/id/${this.cover_i}-L.jpg?default=false">
-                                    <div class="links">
-                                        <a href="https://goodreads.com/book/show/${this.id_goodreads}" target="_blank">
-                                            <img class="goodreads" src="./assets/icons/goodreads.svg">
-                                        </a>
-                                        <a href="https://www.amazon.com/dp/${this.id_amazon}" target="_blank">
-                                            <img class="amazon" src="./assets/icons/amazon.svg">
-                                        </a>
-                                        <img class="read_status" src="./assets/icons/read_status.svg">
-                                        <img class="favorites ${olid}" src="./assets/icons/favorite-${(index != -1) ? 'filled' : 'empty'}.svg">
+                // create a modal
+                this.modal = `<dialog class=${olid}>
+                                <div id="modal">
+                                    <div class="left">
+                                        <img src="https://covers.openlibrary.org/b/id/${this.cover_i}-L.jpg?default=false">
+                                        <div class="links">
+                                            <a href="https://goodreads.com/book/show/${this.id_goodreads}" target="_blank">
+                                                <img class="goodreads" src="./assets/icons/goodreads.svg">
+                                            </a>
+                                            <a href="https://www.amazon.com/dp/${this.id_amazon}" target="_blank">
+                                                <img class="amazon" src="./assets/icons/amazon.svg">
+                                            </a>
+                                            <img class="read_status" src="./assets/icons/read_status.svg">
+                                            <img class="favorites ${olid}" src="./assets/icons/favorite-${(index != -1) ? 'filled' : 'empty'}.svg">
+                                        </div>
+                                    </div>
+
+                                    <div class="right">
+                                        <h1 class="title">${this.title}</h1>
+                                        <div class="author">
+                                            <img src='https://covers.openlibrary.org/a/olid/${this.author_key}-L.jpg'>
+                                            <p>${this.author_name}</p>
+                                        </div>
+                                        <div class="rating container">
+                                            <span class="rating">★</span>
+                                            <span class="rating">★</span>
+                                            <span class="rating">★</span>
+                                            <span class="rating">★</span>
+                                            <span class="rating">★</span>
+                                            <!-- <span>${this.ratings_average}</span> -->
+                                        </div>
+                                        <p class="description">
+                                            <p>
+                                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat unde odio incidunt quidem culpa commodi molestias, harum, aliquid quasi nemo voluptatem eligendi? Vel eius aut magnam facere fugiat at accusamus.
+                                            </p>
+                                            <p>
+                                                Odit debitis a soluta nobis accusamus error ab maxime tenetur numquam illo. Officia odio inventore, corporis rem nam ab eligendi facilis animi ad exercitationem impedit temporibus adipisci ut est accusamus.
+                                            </p>
+                                            
+                                            <p>
+                                                Obcaecati, est qui molestiae esse ad explicabo eius atque assumenda, et asperiores maxime consequatur, libero quis distinctio? Dicta hic tempore animi assumenda ratione placeat veritatis, voluptates excepturi sunt inventore quia.
+                                            </p>
+                                        </p>
+
+                                        <div class="tags">
+                                        </div>
                                     </div>
                                 </div>
-
-                                <div class="right">
-                                    <h1 class="title">${this.title}</h1>
-                                    <div class="author">
-                                        <img src='https://covers.openlibrary.org/a/olid/${this.author_key}-L.jpg'>
-                                        <p>${this.author_name}</p>
-                                    </div>
-                                    <div class="rating container">
-                                        <span class="rating">★</span>
-                                        <span class="rating">★</span>
-                                        <span class="rating">★</span>
-                                        <span class="rating">★</span>
-                                        <span class="rating">★</span>
-                                        <!-- <span>${this.ratings_average}</span> -->
-                                    </div>
-                                    <p class="description">
-                                        <p>
-                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat unde odio incidunt quidem culpa commodi molestias, harum, aliquid quasi nemo voluptatem eligendi? Vel eius aut magnam facere fugiat at accusamus.
-                                        </p>
-                                        <p>
-                                            Odit debitis a soluta nobis accusamus error ab maxime tenetur numquam illo. Officia odio inventore, corporis rem nam ab eligendi facilis animi ad exercitationem impedit temporibus adipisci ut est accusamus.
-                                        </p>
-                                        
-                                        <p>
-                                            Obcaecati, est qui molestiae esse ad explicabo eius atque assumenda, et asperiores maxime consequatur, libero quis distinctio? Dicta hic tempore animi assumenda ratione placeat veritatis, voluptates excepturi sunt inventore quia.
-                                        </p>
-                                    </p>
-
-                                    <div class="tags">
-                                    </div>
-                                </div>
-                            </div>`;
+                              </dialog>`;
 
             }
 
             book.createHTML();
 
             let resultDiv = document.createElement('div');
-            resultDiv.classList.add('result');
-            resultDiv.innerHTML = book.html;
+            resultDiv.classList.add('result', olid);
+            resultDiv.innerHTML = book.html + book.modal;
             bookContainer.appendChild(resultDiv);
-
-            let dialog = document.createElement('dialog');
-            let dialogAttr = book.key.split('/')[2]; // used to select only this book's stars
-            dialog.classList.add(dialogAttr);
-            dialog.innerHTML = book.modal;
-            resultDiv.appendChild(dialog);
 
             // @TODO: provide an alternative way to close the modal
             resultDiv.addEventListener('click', () => {
+                const dialog = document.querySelector(`.result.${olid} dialog`);
                 dialog.showModal();
             });
 
@@ -186,7 +189,7 @@ const api = {
             // RATING
             // if book result contains `ratings_average` key
             if (book.ratings_average) {
-                let stars = document.querySelectorAll(`.${dialogAttr} span.rating:nth-child(-n+${Math.floor(book.ratings_average)})`);
+                let stars = document.querySelectorAll(`.${olid} span.rating:nth-child(-n+${Math.floor(book.ratings_average)})`);
                 stars.forEach( star => star.classList.add('checked'));
             }
             
