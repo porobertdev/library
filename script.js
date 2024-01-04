@@ -82,7 +82,8 @@ const api = {
             let olid = book.key.split('/')[2];
 
             // used to remove the book
-            let index = userBooks.favorites.findIndex( item => item.key.includes(olid));
+            let favIndex = userBooks.favorites.findIndex( item => item.key.includes(olid));
+            let readIndex = userBooks.library.findIndex( item => item.key.includes(olid));
 
             // Prototype Method to genereate HTML for each book
             Object.getPrototypeOf(book).createHTML = function() {
@@ -104,8 +105,8 @@ const api = {
                                             <a href="https://www.amazon.com/dp/${this.id_amazon}" target="_blank">
                                                 <img class="amazon" src="./assets/icons/amazon.svg">
                                             </a>
-                                            <img class="read_status" src="./assets/icons/read_status.svg">
-                                            <img class="favorites ${olid}" src="./assets/icons/favorite-${(index != -1) ? 'filled' : 'empty'}.svg">
+                                            <img class="library ${olid}" src="./assets/icons/library-${(readIndex != -1) ? 'filled' : 'empty'}.svg">
+                                            <img class="favorites ${olid}" src="./assets/icons/favorite-${(favIndex != -1) ? 'filled' : 'empty'}.svg">
                                         </div>
                                     </div>
 
@@ -159,9 +160,9 @@ const api = {
 
             // FAVORITES
             // select favicon specific to the current book of the loop
-            let favIcon = document.querySelector(`img.favorites.${olid}`)
-            console.log(`main loop: ${book}`);
-            
+            let favIcon = document.querySelector(`img.favorites.${olid}`);
+            let readIcon = document.querySelector(`img.library.${olid}`);
+
             /*
                 to get correct value in event listener's function
                 when the element is clicked.
@@ -171,20 +172,28 @@ const api = {
             */
             let currBook = book;
 
-            favIcon.addEventListener('click', () => {
+            favIcon.addEventListener('click', handleIcons);
+            readIcon.addEventListener('click', handleIcons);
                 
-                if (!userBooks.favorites.includes(currBook)) {
-                    console.log('not included, adding...');
-                    userBooks.favorites.push(currBook);
-                    favIcon.setAttribute('src', './assets/icons/favorite-filled.svg');
+            function handleIcons(event) {
+                /*
+                    Add or Remove book from fav/read list.
+                */
+
+                // use the first class
+                const key = event.target.classList[0];
+
+                let icon = (key == 'favorites') ? favIcon : readIcon;
+
+                console.log(event);
+                if (!userBooks[key].includes(currBook)) {
+                    userBooks[key].push(currBook);
+                    icon.setAttribute('src', `./assets/icons/${key}-filled.svg`);
                 } else {
-                    userBooks.favorites.splice(index, 1);
-                    console.log('present already. deleting it...');
-                    favIcon.setAttribute('src', './assets/icons/favorite-empty.svg');
+                    userBooks[key].splice((key == 'favorites') ? favIndex : readIndex, 1);
+                    icon.setAttribute('src', `./assets/icons/${key}-empty.svg`);
                 }
-                console.log('favorites:');
-                console.log(userBooks.favorites);
-            })
+            }
 
             // RATING
             // if book result contains `ratings_average` key
