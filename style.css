@@ -168,8 +168,9 @@ li:hover, .selected {
 .books.container {
     padding: 2rem;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: var(--gp-book-grid);
+    overflow-y: auto;
 }
 
 .books.container > .result {

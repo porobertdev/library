@@ -20,10 +20,15 @@ function handleEvent(event) {
     if (event.key == 'Enter') {
         api.fetchLibrary();
     } else if (event.target.localName == 'li') {
+        // color effect
+        // first make sure we remove the previous one, so remove all
+        tabs.forEach( tab => tab.classList.remove('selected'));
+        this.classList.add('selected');
+
         if (event.target.innerText == 'Trending') {
             api.fetchLibrary(api.baseUrl + api.search.trending.url);
         } else {
-            api.showResults(userBooks[event.target.className]);
+            api.showResults(userBooks[event.target.classList[0]]);
         }
     } else if (event.target.localName == 'select') {
         input.focus();
