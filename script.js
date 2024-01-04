@@ -20,7 +20,11 @@ function handleEvent(event) {
     if (event.key == 'Enter') {
         api.fetchLibrary();
     } else if (event.target.localName == 'li') {
-        api.showResults(userBooks[event.target.className]);
+        if (event.target.innerText == 'Trending') {
+            api.fetchLibrary(api.baseUrl + api.search.trending.url);
+        } else {
+            api.showResults(userBooks[event.target.className]);
+        }
     } else if (event.target.localName == 'select') {
         input.focus();
     }
@@ -42,14 +46,20 @@ const api = {
         subject: {
             url: 'subjects/', // subject.json
             params: '?details=true'
+        },
+        trending: {
+            url: 'trending/monthly.json',
+            params: ''
         }
     },
     generateUrl: function() {
         return this.baseUrl + this.search[searchType.value].url + input.value.split(' ').join('+') + this.search[searchType.value].params;
     },
-    fetchLibrary: function() {
-        
-        let url = this.generateUrl();
+    fetchLibrary: function(url) {
+
+        if (!url) {
+            url = this.generateUrl();
+        }
 
         fetch(url)
             .then(response => {
@@ -60,7 +70,7 @@ const api = {
             })
             .then(data => {
                 // HAnDLE RESPONSE DATA
-                this.showResults(data.docs);
+                (!url.includes('trending')) ? this.showResults(data.docs) : this.showResults(data.works);
 
             })
             .catch(error => {
