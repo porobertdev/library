@@ -35,13 +35,13 @@ function handleEvent(event) {
     }
 }
 
-const api = {
-    baseUrl: 'https://openlibrary.org/',
-    search: {
+class LibraryAPI {
+    baseUrl = 'https://openlibrary.org/'
+
+    search = {
         title: {
             url: 'search.json?title=',
-            params: `&fields=key,title,author_name,author_key,cover_i,ratings_average,first_publish_year,subject_facet,number_of_pages_median,
-            id_goodreads,id_amazon`
+            params: `&fields=key,title,author_name,author_key,cover_i,ratings_average,first_publish_year,subject_facet,number_of_pages_median,id_goodreads,id_amazon`
         },
         author: {
             
@@ -56,11 +56,11 @@ const api = {
             url: 'trending/monthly.json',
             params: ''
         }
-    },
-    generateUrl: function() {
+    }
+    generateUrl() {
         return this.baseUrl + this.search[searchType.value].url + input.value.split(' ').join('+') + this.search[searchType.value].params;
-    },
-    fetchLibrary: function(url) {
+    }
+    fetchLibrary(url) {
 
         if (!url) {
             url = this.generateUrl();
@@ -82,14 +82,13 @@ const api = {
                 console.error('Error:', error);
             });
 
-    },
-    showResults: function(books) {
-
+    }
+    showResults(books) {
         // Delete existing search results
         // Thanks @StackOverflow: https://stackoverflow.com/a/64974905/21600888
         bookContainer.replaceChildren('');
 
-        for (book of books) {
+        for (let book of books) {
             console.log(book);
             if (books == userBooks.favorites) console.log('parsing favorites...');
 
@@ -227,13 +226,13 @@ const api = {
                     .map(item => item.toLowerCase())
                     .filter( item => !item.includes(' ')))];
 
-                for (tag of filtered) {
+                for (let tag of filtered) {
                     let span = document.createElement('span');
                     span.textContent = '#' + tag;
                     hashtags.appendChild(span);
-                }
+                };
             }
-        }
+        };
 
         function checkInvalidCovers() {
             let img = document.querySelectorAll('.books.container img');
@@ -245,3 +244,5 @@ const api = {
         checkInvalidCovers();
     }
 };
+
+const api = new LibraryAPI();
